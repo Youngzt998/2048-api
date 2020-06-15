@@ -23,12 +23,13 @@ class Game:
                 2 ** np.random.randint(1, 10, size=(self.size, self.size))
             self.__end = False
         else:
-            self.__board = np.zeros((self.size, self.size))
+            self.__board = np.zeros((self.size, self.size), dtype='i')
             # initilize the board (with 2 entries)
             self._maybe_new_entry()
             self._maybe_new_entry()
         self.enable_rewrite_board = enable_rewrite_board
         assert not self.end
+
 
     def move(self, direction):
         '''

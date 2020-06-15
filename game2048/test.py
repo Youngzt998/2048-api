@@ -14,28 +14,17 @@ def single_run(size, score_to_win, AgentClass, **kwargs):
 if __name__ == '__main__':
     game = Game(4, 2048)
 
+    # default: 128
+    batch_size = 32
+
     agent = LearningAgent(game=game, display=None,
-                          trained=False, model_path="./model/model_default.h5")
-
-    agent.genTrainData(itrTime=)
-
-    agent.learn(itr_time=1000, goal = 128)
+                          new_model=False, model_path="./model/model_default_batch" + str(batch_size) + ".h5")
 
 
+    agent.learn(itr_time=1000000, goal = 2048, batch_size=batch_size,)
 
-    # GAME_SIZE = 4
-    # SCORE_TO_WIN = 2048
-    # N_TESTS = 10
+    # agent = LearningAgent(game=game, display=None,
+    #                       new_model=False, model_path="./model/model_default.h5")
     #
-    # '''====================
-    # Use your own agent here.'''
-    # from game2048.agents import LearningAgent as TestAgent
-    # '''===================='''
     #
-    # scores = []
-    # for _ in range(N_TESTS):
-    #     score = single_run(GAME_SIZE, SCORE_TO_WIN,
-    #                        AgentClass=TestAgent)
-    #     scores.append(score)
-    #
-    # print("Average scores: @%s times" % N_TESTS, sum(scores) / len(scores))
+    # agent.learn(itr_time=1000000, goal = 2048)

@@ -1,3 +1,5 @@
+# Not used any more
+
 import numpy as npy
 from game2048.game import Game
 from game2048.displays import Display
