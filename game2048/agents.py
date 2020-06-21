@@ -76,8 +76,8 @@ class ExpectiMaxAgent(Agent):
 # A repeater
 class LearningAgent(Agent):
 
-    def __init__(self, game, display=None, tch_search_fun=None,
-                 model_path="./game2048/model/test1.h5",
+    def __init__(self, game, display=None, tch_search_fun="None",
+                 model_path="./game2048/model/model_data_in_group.h5",
                  new_model=False, multi_model = False):
 
         super().__init__(game, display)
@@ -147,6 +147,7 @@ class LearningAgent(Agent):
 
         return model
 
+    # Encode the data
     def one_hot(self, arr):
         shape = (4, 4)
         ans = np.zeros(shape=shape + (16,), dtype=bool)
@@ -157,7 +158,10 @@ class LearningAgent(Agent):
         # print(ans.shape)
         return ans
 
+    # Online learning, with small-size data, step-by-self
     def learn(self, itr_time=5, batch_size=128, goal=2048, dynamic_batch=False):
+        from .expectimax import board_to_move
+        self.tch_search_fun = board_to_move
 
         if dynamic_batch:
             batch_size = 8
@@ -248,8 +252,10 @@ class LearningAgent(Agent):
 
         self.model.save(filepath=self.model_path)
 
+    # Online learning, with small-size data, step-by-self, omit small scores when it went stable at 128
     def multi_level_learn(self, batch_size=128, goal=2048):
-
+        from .expectimax import board_to_move
+        self.tch_search_fun = board_to_move
         stable = 128
         satisfied = 0
 
@@ -354,7 +360,10 @@ class LearningAgent(Agent):
 
         self.model.save(filepath=self.model_path)
 
+    # Offline learning, with large-size data, step-by-teacher, use 3 or 4 different models
     def multi_level_multi_model_learn(self, itr_time, seq = 0):
+        from .expectimax import board_to_move
+        self.tch_search_fun = board_to_move
 
         path128 = "./model_multi/multi128.h5"
         path256 = "./model_multi/multi256.h5"
@@ -500,7 +509,11 @@ class LearningAgent(Agent):
         print("Average Score in 1000 iteration currently is: ", float(total) / 1000.0)
         print("stat: ", stat)
 
+    # Online learning, with large-size data, step-by-self
     def improve_from_dataset(self, goal = 2048, group = 10000, go_by_self = True):
+        from .expectimax import board_to_move
+        self.tch_search_fun = board_to_move
+
         stable = 128
         satisfied = 0
 
@@ -589,7 +602,10 @@ class LearningAgent(Agent):
             if float(total)/1000.0 > 700:
                 break
 
+    # Online learning, with large-size data, step-by-self
     def learn_from_dataset_from_master(self, L, R, group = 100000):
+        from .expectimax import board_to_move
+        self.tch_search_fun = board_to_move
 
         print("Training: [L, R] = ", L, R)
         X_train = []
@@ -673,10 +689,12 @@ class LearningAgent(Agent):
         print("Average Score currently is: ", float(total) / 1000.0)
 
 
-
+    # Not used anymore
     def set_trained(self):
         self.trained = True
 
+
+    # Evaluation from 1000 games
     def self_test(self):
 
         import time
@@ -709,6 +727,10 @@ class LearningAgent(Agent):
             for s in [2048, 1024, 512, 256, 128, 64, 32, 16]:
                 if game.score >= s:
                     stat[s] += 1
+
+            if i % 10 == 0:
+                print("Test: ", i)
+                print("Score: ", game.score)
 
         print("Average Score currently is: ", float(total) / 1000.0)
         print("stat: ", stat)

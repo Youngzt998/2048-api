@@ -8,7 +8,7 @@ if __name__ == '__main__':
 
     agent = LearningAgent(game=game, display=None,
                           new_model=False,
-                          model_path="./model/test1.h5")
+                          model_path="./model/model_data_in_group.h5")
 
     agent.self_test()
 

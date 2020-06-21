@@ -16,6 +16,7 @@ if __name__ == '__main__':
 
     agent = LearningAgent(game=game,
                           display=None,
+                          tch_search_fun=None,
                           new_model=new_model,
                           model_path=None,
                           multi_model=True)

@@ -14,7 +14,7 @@ if __name__ == '__main__':
 
     # increase batch size every time a higher score occurs if dynamic_batch = True
 
-    agent = LearningAgent(game=game, display=None,
+    agent = LearningAgent(game=game, display=None, tch_search_fun=None,
                           new_model=new_model,
                           model_path="./model/model_multi_level" + str(batch_size) + ".h5")
 

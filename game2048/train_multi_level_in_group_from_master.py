@@ -11,7 +11,7 @@ if __name__ == '__main__':
     # warning: this would overwrite existing previous model if game time reaches 500 in training
     new_model = False
 
-    agent = LearningAgent(game=game, display=None,
+    agent = LearningAgent(game=game, display=None, tch_search_fun=None,
                           new_model=new_model,
                           model_path="./model/model_multi_level_from_master.h5")
     # agent.learn_from_dataset_from_master(L=0, R=16, group=100000)

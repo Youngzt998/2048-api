@@ -12,7 +12,7 @@ if __name__ == '__main__':
     # warning: this would overwrite existing previous model if game time reaches 500 in training
     new_model = False
 
-    agent = LearningAgent(game=game, display=None,
+    agent = LearningAgent(game=game, display=None, tch_search_fun=None,
                           new_model=new_model,
                           model_path="./model/test1.h5")
     agent.improve_from_dataset(group=2000)

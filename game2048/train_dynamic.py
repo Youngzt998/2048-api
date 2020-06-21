@@ -16,7 +16,7 @@ if __name__ == '__main__':
     dynamic_batch = True
 
     if(not dynamic_batch):
-        agent = LearningAgent(game=game, display=None,
+        agent = LearningAgent(game=game, display=None, tch_search_fun=None,
                               new_model=new_model, model_path="./model/model_default_batch" + str(batch_size) + ".h5")
     else:
         agent = LearningAgent(game=game, display=None,
